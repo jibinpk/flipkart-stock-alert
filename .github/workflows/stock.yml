@@ -2,7 +2,7 @@ name: Flipkart Stock Checker
 
 on:
   schedule:
-    - cron: "*/1 * * * *"   # runs every 10 minutes
+    - cron: "*/5 * * * *"   # runs every 5 minutes
   workflow_dispatch:         # allow manual run
 
 jobs:
