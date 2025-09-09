@@ -17,7 +17,11 @@ def check_stock():
     r = requests.get(URL, headers=headers)
     soup = BeautifulSoup(r.text, "html.parser")
 
-    if "Add to cart" in r.text or "BUY NOW" in r.text.upper():
+    # Find all buttons
+    buttons = [b.get_text(strip=True) for b in soup.find_all("button")]
+    print("Buttons found:", buttons)  # debug
+
+    if any("Add to cart" in b or "Buy Now" in b for b in buttons):
         send_telegram("✅ Casio AE-1200 is back in stock! 🔗 " + URL)
     else:
         print("Out of stock")
