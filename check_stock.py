@@ -1,16 +1,16 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 
-# Flipkart product URL
 URL = "https://www.flipkart.com/casio-ae-1200whd-1avdf-youth-digital-watch-men/p/itm170b0615f9472?pid=WATDJ5YXHRHZJFRY&lid=LSTWATDJ5YXHRHZJFRYVW2BZK&marketplace=FLIPKART&_refId=&_appId=CL"
 
-# Telegram details
-BOT_TOKEN = "Y7608314810:AAHfht53_lXPuyZoTFnO8MYP1gtHXI8zb6A"
-CHAT_ID = "307434998"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 def send_telegram(msg):
-    requests.get(f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
-                 params={"chat_id": CHAT_ID, "text": msg})
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    r = requests.get(url, params={"chat_id": CHAT_ID, "text": msg})
+    print("Telegram response:", r.text)  # debug
 
 def check_stock():
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -23,4 +23,6 @@ def check_stock():
         print("Out of stock")
 
 if __name__ == "__main__":
+    # Test message
+    send_telegram("🔔 Test: Flipkart Stock Alert Bot is working!")
     check_stock()
